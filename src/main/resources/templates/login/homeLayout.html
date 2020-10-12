@@ -9,10 +9,25 @@
 	<script th:src="@{/webjars/bootstarap/3.7.7-1/js/bootstrap.min.js}"></script>
 	
 	<!-- Bootstrapの読込 -->
+	<link th:href="@{/css/home.css}" rel="stylesheet"></link>
 	
-	<title>Insert title here</title>
+	<title>Home</title>
 </head>
 <body>
+<!-- ====ヘッダー（ナビゲーションバー）==== -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class ="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand"href="#">SpringSample</a>
+		</div>
+		<form method:"post" th:action="@{logout}">
+			<button class="btn btn-link pull-right navbar-brand" type="submit">
+				ログアウト
+			</button>
+		</form>
+	</div>
+</nav>
+<!-- ====サイドバー==== -->
 
 </body>
 </html>
