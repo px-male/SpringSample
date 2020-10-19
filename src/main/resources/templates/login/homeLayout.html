@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org" mlsns:layout="http://www.ultraq.net.nz/thymeleaf.layout">
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf.layout">
 <head>
 	<meta charset="UTF-8">
 	
@@ -18,9 +18,9 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class ="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand"href="#">SpringSample</a>
+			<a class="navbar-brand" href="#">SpringSample</a>
 		</div>
-		<form method:"post" th:action="@{logout}">
+		<form method="post" th:action="@{/logout}">
 			<button class="btn btn-link pull-right navbar-brand" type="submit">
 				ログアウト
 			</button>
@@ -28,6 +28,25 @@
 	</div>
 </nav>
 <!-- ====サイドバー==== -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-2 sidebar">
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation">
+					<a th:href="@{'/userList'}">ユーザ管理</a>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- ====コンテンツ==== -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-2 main">
+			<!-- ポイント：th:include -->
+			<div th:include="__${contents}__"></div>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>
