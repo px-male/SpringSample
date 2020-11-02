@@ -40,9 +40,9 @@
 						</tr>
 						<tr>
 							<!-- ユーザ名 -->
-							<th class="activ">ユーザ名</th>
+							<th class="active">ユーザ名</th>
 							<td>
-								<div class="form-group" th:classappend="${fields.hasErrors('userName')}?'has-error'">
+								<div class="form-group" th:classappend="${#fields.hasErrors('userName')}?'has-error'">
 									<input type="text" class="form-controle" th:field="*{userName}"/>
 									<span class="text-danger" 
 										th:if="${#fields.hasErrors('userName')}" 
@@ -52,17 +52,54 @@
 							</td>
 						</tr>
 						<tr>
-						
-						
+							<!-- 誕生日 -->
+							<th class="active">誕生🅱</th>
+							<td>
+								<div class="form-group" th:classappend="${#fields.hasErrors('birthday')}?'has-error'">
+									<input type="text" class="form-controle" placeholder="yyyy/MM/dd" th:field="*{birthday}"/>
+									<span class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">
+										birthday error
+									</span>
+								</div>
+							</td>
 						</tr>
-						
+						<tr>
+							<!-- 年齢 -->
+							<th class="active">年齢</th>
+							<td>
+								<div class="form-group" th:classappend="${#fields.hasErrors('age')}?'has-error'">
+									<input type="text" class="form-controle" th:field="*{age}"/>
+									<span class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">
+										age error
+									</span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<!-- 結婚 -->
+							<th class="active">結婚</th>
+							<td>
+								<div class="form-group">
+									<div th:each="item:${radioMarriage}">
+										<input type="radio" name="radioMarrige"		
+											 
+											th:value="${item.value}" 
+											th:text="${item.key}" 
+											th:field="*{marriage}">
+										</input>
+										<span class="text-danger" th:if="${#fields.hasErrors('marriage')}" th:errors="*{marriage}">
+											marriage error
+										</span>
+									</div>
+								</div>
+							</td>
+						</tr>
 					</table>
 				</form>
 			</div>
 			</div>
 	
 	</div>
-
 
 
 </body>
