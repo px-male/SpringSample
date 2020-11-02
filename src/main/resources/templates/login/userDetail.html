@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlsn:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="userDetail_contents">
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="page-header">
+					<h1>ユーザ詳細</h1>
+				</div>
+				<form method="post" th:action="@{userDetail}" th:object="${singupForm}">
+					<table class="table table-bordered table-hober">
+						<tr>
+							<!-- ユーザID（入力不可） -->
+							<th class="active col-sm-2">ユーザID</th>
+							<td class="col-sm-3">
+								<div class="form-group">
+									<input type="text" class="form-control" 
+										th:field="*{userId}" 
+										readonly="readonly"/>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th class="active">パスワード</th>
+							<td>
+								<div class="form-group" th:classappend="${#fields.hasErrors('password')}?'has-error'">
+									<input type="text" class="form-control" th:field="*{password}"/>
+									<span class="text-danger" 
+										th:if="${#fields.hasErrors('password')}" 
+										th:errors="*{password}">
+										password error 
+									</span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<!-- ユーザ名 -->
+							<th class="activ">ユーザ名</th>
+							<td>
+								<div class="form-group" th:classappend=""
+							</td>
+						</tr>
+						
+					</table>
+				</form>
+			</div>
+			</div>
+	
+	</div>
+
+
+
+</body>
+</html>

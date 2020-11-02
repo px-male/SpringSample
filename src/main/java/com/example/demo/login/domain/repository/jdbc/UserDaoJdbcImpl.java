@@ -22,7 +22,7 @@ public class UserDaoJdbcImpl implements UserDao {
 	@Override
 	public int count() throws DataAccessException {
 		// 全件取得してカウント
-		int count = jdbc.queryForObject("SELECT COUNT(*) FROM m_master", Integer.class);
+		int count = jdbc.queryForObject("SELECT COUNT(*) FROM m_user", Integer.class);
 		return count;
 	}
 	
@@ -53,7 +53,23 @@ public class UserDaoJdbcImpl implements UserDao {
 	// ユーザテーブルのデータを１件取得
 	@Override
 	public User selectOne(String userId) throws DataAccessException {
-		return null;
+		
+		//１件取得
+		Map<String, Object> map =jdbc.queryForMap("SELECT * FROM m_user"+" WHERE user_id = ?", userId);
+		
+		//結果返却用の変数
+		User user = new User();
+		
+		//取得したデータを返却用の変数にセットしていく。
+		user.setUserId((String)map.get("user_id")); //ユーザID
+		user.setPassword((String)map.get("password")); //パスワード
+		user.setUserName((String)map.get("user_name")); //ユーザ名
+		user.setBirthday((Date) map.get("birthday")); //誕生日
+		user.setAge((int) map.get("age")); //年齢
+		user.setMarriage((boolean) map.get("marriage")); //結婚ステータス
+		user.setRole((String) map.get("role")); //ロール
+		
+		return user;
 	}
 	
 	//ユーザテーブルのデータを全件取得
@@ -73,9 +89,9 @@ public class UserDaoJdbcImpl implements UserDao {
 			User user = new User();
 			
 			//Userインスタンスに取得したデータをセットする
-			user.setUserId((String)map.get("userId")); //ユーザID
+			user.setUserId((String)map.get("user_id")); //ユーザID
 			user.setPassword((String)map.get("password"));//パスワード
-			user.setUserName((String)map.get("userName"));//ユーザ名
+			user.setUserName((String)map.get("user_name"));//ユーザ名
 			user.setBirthday((Date)map.get("birthday"));//誕生日
 			user.setAge((int)map.get("age"));//年齢
 			user.setMarriage((Boolean)map.get("marriage"));//結婚ステータス
