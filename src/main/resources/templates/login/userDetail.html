@@ -42,8 +42,18 @@
 							<!-- ユーザ名 -->
 							<th class="activ">ユーザ名</th>
 							<td>
-								<div class="form-group" th:classappend=""
+								<div class="form-group" th:classappend="${fields.hasErrors('userName')}?'has-error'">
+									<input type="text" class="form-controle" th:field="*{userName}"/>
+									<span class="text-danger" 
+										th:if="${#fields.hasErrors('userName')}" 
+										th:errors="*{userName}">
+									</span>
+								</div>
 							</td>
+						</tr>
+						<tr>
+						
+						
 						</tr>
 						
 					</table>
