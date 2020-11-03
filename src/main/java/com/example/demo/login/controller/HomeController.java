@@ -69,15 +69,86 @@ public class HomeController {
 	
 	//ユーザ詳細画面用のGET用メソッド
 	@GetMapping("/userDetail/{id:.+}")
-	public String getUserDetail(@ModelAttribute SignupForm form, Model model, @PathVariable("id") String userId ) {
+	public String getUserDetail(@ModelAttribute SignupForm form,
+			Model model, 
+			@PathVariable("id") String userId ) {
 		
 		//ユーザID確認（デバッグ）
 		System.out.println("userId = " + userId);
 
 		//コンテンツ部分にユーザ詳細を表示するための文字列を登録
 		model.addAttribute("contents", "login/userDetail :: userDetail_contents");
+
+		//結婚ステータス用ラジオボタンの初期化
+		radioMarriage = initRadioMarriage();
+		
+		//ラジオボタン用のMapをModelに登録
+		model.addAttribute("radioMarriage", radioMarriage);
+		
+		//ユーザIDのチェック
+		if(userId != null && userId.length() > 0) {
+			//ユーザ情報の取得
+			User user = userService.selectOne(userId);
+			
+			//Userクラスをフォームクラスに変換
+			form.setUserId(user.getUserId());  //ユーザID
+			form.setUserName(user.getUserName());  //ユーザ名
+			form.setBirthday(user.getBirthday());  //誕生日
+			form.setAge(user.getAge());  //年齢
+			form.setMarriage(user.isMarriage()); //結婚ステータス
+			
+			//Modelに登録
+			model.addAttribute("signupForm", form);
+		}
 		
 		return "/login/homeLayout";
+	}
+	
+	//ユーザ更新用処理
+	@PostMapping(value = "/userDetail", params = "update")
+	public String postUserDetailUpdate(@ModelAttribute SignupForm form, Model model) {
+		
+		System.out.println("更新ボタンの処理");
+		
+		//Userインスタンスの生成
+		User user = new User();
+		
+		//フォームクラスを	Userクラスに変換
+		user.setUserId(form.getUserId());
+		user.setUserName(form.getUserName());
+		user.setPassword(form.getPassword());
+		user.setAge(form.getAge());
+		user.setBirthday(form.getBirthday());
+		user.setMarriage(form.isMarriage());
+		
+		//更新実行
+		boolean result = userService.updateOne(user);
+		
+		if (result == true) {
+			model.addAttribute("result", "更新成功");
+		}else {
+			model.addAttribute("result", "更新失敗");
+		}
+		
+		return getUserList(model);
+	}
+	
+	//ユーザ削除用処理
+	@PostMapping(value="/userDetail", params="delete")
+	public String postUserDetailDelete(@ModelAttribute SignupForm form, Model model) {
+		System.out.println("削除ボタンの処理");
+		
+		//削除実行
+		boolean result = userService.deleteOne(form.getUserId());
+		
+		if(result == true) {
+			model.addAttribute("result", "削除成功");
+		} else {
+			model.addAttribute("result", "削除失敗");
+		}
+		
+		return getUserList(model);
+		
 	}
 	
 	
