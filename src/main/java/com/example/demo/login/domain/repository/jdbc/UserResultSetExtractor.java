@@ -26,7 +26,7 @@ public class UserResultSetExtractor implements ResultSetExtractor<List<User>> {
 			
 			//取得したレコードをUserインスタンスにセット
 			user.setUserId(rs.getString("user_id"));
-			user.setUserName(rs.getString("userName"));
+			user.setUserName(rs.getString("user_name"));
 			user.setPassword(rs.getString("password"));
 			user.setAge(rs.getInt("age"));
 			user.setBirthday(rs.getDate("birthday"));

@@ -17,10 +17,13 @@ public class UserDaoJdbcImpl4 extends UserDaoJdbcImpl {
 	public List<User> selectMany() {
 		
 		//M_USERテーブルのデータを全件取得する
-		String sql = "SELECT * FOM M_USER";
+		String sql = "SELECT * FROM m_user";
 		
 		//ResultSetExceptionの生成
-		
+		UserResultSetExtractor extractor = new UserResultSetExtractor();
+
+		//SQL実行
+		return jdbc.query(sql, extractor);
 	}
 	
 
