@@ -16,7 +16,7 @@ import com.example.demo.login.domain.repository.UserDao;
 public class UserDaoJdbcImpl implements UserDao {
 	
 	@Autowired
-	JdbcTemplate jdbc;
+	private JdbcTemplate jdbc;
 	
 	//ユーザテーブルの件数を取得
 	@Override
@@ -55,7 +55,8 @@ public class UserDaoJdbcImpl implements UserDao {
 	public User selectOne(String userId) throws DataAccessException {
 		
 		//１件取得
-		Map<String, Object> map =jdbc.queryForMap("SELECT * FROM m_user"+" WHERE user_id = ?", userId);
+		Map<String, Object> map =jdbc.queryForMap("SELECT * FROM m_user"
+				+ " WHERE user_id = ?", userId);
 		
 		//結果返却用の変数
 		User user = new User();
@@ -65,8 +66,8 @@ public class UserDaoJdbcImpl implements UserDao {
 		user.setPassword((String)map.get("password")); //パスワード
 		user.setUserName((String)map.get("user_name")); //ユーザ名
 		user.setBirthday((Date) map.get("birthday")); //誕生日
-		user.setAge((int) map.get("age")); //年齢
-		user.setMarriage((boolean) map.get("marriage")); //結婚ステータス
+		user.setAge((Integer) map.get("age")); //年齢
+		user.setMarriage((Boolean) map.get("marriage")); //結婚ステータス
 		user.setRole((String) map.get("role")); //ロール
 		
 		return user;
@@ -123,6 +124,11 @@ public class UserDaoJdbcImpl implements UserDao {
 				, user.getAge()
 				, user.isMarriage()
 				, user.getUserId());
+		
+		//トランザクション確認のためわざと例外を投げる
+		if(rowNumber > 0) {
+			throw new DataAccessException("トランザクションテスト") {};
+		}
 		
 		return rowNumber;
 	}

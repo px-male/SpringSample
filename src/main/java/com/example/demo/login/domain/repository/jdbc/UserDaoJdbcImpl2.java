@@ -19,7 +19,7 @@ public class UserDaoJdbcImpl2 extends UserDaoJdbcImpl {
 	public User selectOne(String userId) {
 		
 		//1件取得用SQL
-		String sql = "SELECT * from m_user WHERE userId = ?";
+		String sql = "SELECT * from m_user WHERE user_id = ?";
 		
 		//RowMapperの生成
 		UserRowMapper rowMapper = new UserRowMapper();
