@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 
 @Configuration
@@ -62,6 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/css/**").permitAll()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/signup").permitAll()
+		.antMatchers("/rest/**").permitAll()
+		.antMatchers("/h2-console/**").permitAll()
+		.antMatchers("/admin").hasAuthority("ROLE_ADMIN")
 		.anyRequest().authenticated();
 			
 		//ログイン処理
@@ -69,12 +74,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginProcessingUrl("/login")
 			.loginPage("/login")
 			.failureUrl("/login")
-			.usernameParameter("/userId")
+			.usernameParameter("userId")
 			.passwordParameter("password")
 			.defaultSuccessUrl("/home", true);
 		
+		//ログアウト処理
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutUrl("/logout")
+		.logoutSuccessUrl("/login");
+		
 		//CSRF対策を無効に設定（一時的）
-		http.csrf().disable();
+//		http.csrf().disable();
+
+		//CSRFを無効にするURLを指定
+		RequestMatcher csrfMatcher = new RestMatcher("/rest/**");
+		
+		//RESTのみCSRF対策を無効に設定
+		http.csrf().requireCsrfProtectionMatcher(csrfMatcher);
 	}
 	
 	@Override
@@ -86,5 +102,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authoritiesByUsernameQuery(ROLE_SQL)
 			.passwordEncoder(passwordEncoder());
 	}
-	
 }
