@@ -24,7 +24,7 @@ public class RestMatcher implements RequestMatcher {
 		}
 		
 		// 特定のURLに該当する場合、CSRFチェクを実施しない
-		if(request.equals(matcher)) {
+		if(matcher.matches(request)) {
 			return false;
 		}
 		return true;

@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.repository.jdbc;
+package com.example.demo.login.domain.service.jdbc;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +48,27 @@ public class RestServiceJdbcImpl implements RestService {
 	//１件更新用メソッド
 	@Override
 	public boolean update(User user) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
+		
+		int result = dao.updateOne(user);
+		
+		if (result == 0 ) {
+			return false;
+		} else {
+			return true;
+		}		
 	}
 
 	//1件削除用メソッド
 	@Override
 	public boolean delete(String userId) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
+
+		int result = dao.deleteOne(userId);
+		
+		if (result == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	

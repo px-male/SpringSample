@@ -138,9 +138,9 @@ public class UserDaoJdbcImpl implements UserDao {
 				, user.getUserId());
 		
 		//トランザクション確認のためわざと例外を投げる
-		if(rowNumber > 0) {
-			throw new DataAccessException("トランザクションテスト") {};
-		}
+//		if(rowNumber > 0) {
+//			throw new DataAccessException("トランザクションテスト") {};
+//		}
 		
 		return rowNumber;
 	}
